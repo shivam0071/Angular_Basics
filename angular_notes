@@ -1,0 +1,179 @@
+Angular creates a single HTML website, THE DOM of this HTML gets modified by Javascript
+hence the loading is faster...things are very responsive like a mobile app...that why we are using Angular
+
+GET STARTED
+
+1) Download and Install node which also installs npm (node package manager)
+We need npm to install various node modules which we will be using in Angular app
+you can think npm as pip of python
+
+User: Wait wait wait...WTH is NODE?
+
+    tldr; Node runs JS outside a browser and it is asynchronous by default
+    Node.exe is basically a C++ program for running java script (js engine)
+
+    Something about node -> https://nodejs.org/en/about/
+    Node Architecture - https://www.youtube.com/watch?v=XUSHH0E-7zk (imp)
+    Something about Asynchronous Programming -> https://eloquentjavascript.net/11_async.html
+    Asynchronous Programming -> https://www.youtube.com/watch?v=jOupHNvDIq8&list=PLTjRvDozrdlydy3uUBWZlLUTNpJSGGCEm&index=3
+
+
+
+2.) Install the Angular CLI -> https://cli.angular.io/
+>>> npm install -g @angular/cli
+The Angular CLI is a command-line interface tool that you use to initialize, develop, scaffold, and maintain Angular applications.
+Details - > https://angular.io/cli
+basically we use this to create, build and server projects
+example - ng new my-dream-app
+
+*** ng help (use this)
+    ng generate --help
+
+
+USER : OK MAN, enough of this....i have installed this node, npm and cli thing now tell me how to make websites?
+Can't we just start already
+
+TUTOR: Ok ok hold on to your horses, we will make a first app soon.
+Lets make our first app using @angular/cli
+
+FIRST APP
+1.) First make a folder call - Intro_1 and cd to Intro_1
+
+2.) Make a first app by running - ng new intro-app-1
+    * Routing .. select - N
+    * CSS -- Enter
+DAMMMMMMMM -- The project creation failed
+Project name "intro-app-1" is not valid. New project names must start with a letter, and must contain only alphanumeric characters or dashes. When adding a dash the segment after the dash must also start with a letter.
+intro-app-1
+
+Only dashes and alphabets are allowed...Okay then
+lets run
+    * ng new intro-app
+
+USER: Mannnnnnn its taking forever to run, why is it so..what the heck is happening?
+T: Its installing all the dependencies... Angular uses type script while browsercan only understand Java Script
+
+Type Script is a superset of JS, Any line of JS code will also run in TS
+
+1.) Strong Typing
+    eg int i = 33 ( not neccessary but better use them)
+
+2.) OOPS
+3.) Compile Time Errors
+4.) Great Tooling
+
+TS ---------> Transpile -------------> JS
+
+
+3.) Run the app
+>>> ng serve
+This converts all the TS to JS and runs our app
+
+Congrats man...your first angular app is running.... CHEERS
+
+https://blog.angular.io/
+https://angular.io/tutorial -- A must visit tutorial, check out Intro_tute_by_angular_2
+
+
+
+
+
+
+
+
+
+
+
+NEXT STEPS
+
+User : Can you tell me how to make some cool websites right now?
+T: Welllll.......lets see we still have a lots of basics to cover
+
+so our simple steps were
+ng new project-name - to create new project
+ng serve - to run
+
+
+Let move forward
+
+Lets make some changes to the code and understand the basics
+* Angular app consists of components...currently we only have a single component
+.html
+.css
+.ts
+app.module.ts - For importing [TS modules] and for letting Angular know about those modules
+
+*  ... src/app
+    Lets change something is app.component.ts file [Add ...TESTING TS]
+    Looks like {{title}} such variables are defined in the .ts files
+    Result - The changes are visible
+
+* lets remove the whole HTML and add our tags , Result - Works
+  Lets add something to Input
+  We have some modules in angular called Directives written as 
+  [()]
+  Here we added ngModel...now we also has to import this in app.module.ts
+  [(ngModel)]
+
+    Import using
+    import {FormsModule} from '@angular/forms'
+
+
+HTML :- 
+<input type = "text" [(ngModel)] = title>
+<p>{{title}}</p>
+
+User : DANG it worksss
+
+
+Also you might see something called app-root in component.ts
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+
+Now you can also see this in index.html 
+
+<body>
+  <app-root></app-root>
+</body>
+</html>
+
+So similarly you have define selectors in index.html to have your component running
+Let remove this from index.html
+
+Result -- The webpage is empty lol 
+
+
+
+BOOTSTRAP -- LET us also ADD the bootstrap so we hae some basic CSS
+>>> npm install --save bootstrap@3
+This save this locally in node_modules folder
+
+2.) Add this to angular.json as well
+    "styles": [
+              "src/styles.css"
+            ],
+
+Add here 
+            "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/styles.css"
+            ],
+
+Result :- It works...making a backup of this to use for different projects
+
+
+
+
+
+
+
+
+
+##################################################################
+We are done with the Basics.....
+##################################################################
+
+Lets go into everything in details
