@@ -173,7 +173,255 @@ Result :- It works...making a backup of this to use for different projects
 
 
 ##################################################################
-We are done with the Basics.....
+We are done with the Basics.....this project is save elsewhere, We will be modifying this now
 ##################################################################
 
 Lets go into everything in details
+
+How does everything is triggered?
+
+WE know that only index.html is running and the coponents are added but then how is it initiated 
+and how to we see all the components?
+
+<body>
+  <app-root></app-root>
+</body>
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+
+* main.ts trigers everything >> platformBrowserDynamic().bootstrapModule(AppModule)
+Here we see some AppModule is being passed...what is it?
+>>> import { AppModule } from './app/app.module'; <<- Imported at the top...it is our app.module.ts file
+
+hmmmmmm so the structure so far is
+main.ts >> app.module.ts
+
+
+Now we also see  this   
+declarations: [AppComponent],  bootstrap: [AppComponent] in app.moudle.ts file
+which is the actual component 
+import { AppComponent } from './app.component';
+
+
+
+
+#######################################################
+CREATING NEW COMPONENTS
+#######################################################
+
+New components selector will be added to the app.component.ts which is the root componentof our app
+
+
+Use Case: Lets print some information of our Server (backend)
+
+1.)  Lets create a folder called server in app folder
+2.)  add files... server.component.ts etc
+
+server.component.ts 
+Make it a component by exporting component classes of Angular...We use export because
+we are going to use this component elsewhere.....in short used by Angular
+
+ADD :-
+  export class ServerComponent{
+    
+  }
+
+ADD Decorator:
+
+import { Component } from '@angular/core'
+
+@Component({
+    selector: 'app-server',
+    templateUrl: './server.component.html',
+})
+  export class ServerComponent{
+    
+  }
+
+OBSERVE thee SYNTAX
+We created a component here and added Component from core so that this can be used by Angular
+
+
+Now we will add this to app.module.ts
+
+An App module is a bundle of features of our app...we add the components here.
+import { ServerComponent } from './server/server.component';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule, FormsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+We can see that AppModule class is also empty but a decorator is added (NgModule from core)
+We can add newly created components in declarations.
+bootstrap tells which components should be used as root
+
+Soooo just import it and Add it there... :D
+add - <app-server></app-server> to app.component.html
+Result - Everything Works :D
+
+
+NOW for fun...only for fun....lets add another component...and nest it inside server
+
+We can create a new component automatically also by running..
+* ng generate component <name> OR ng g c <name>
+
+Let do it
+ng g c servers
+
+just add 
+<h2>Component SERVERS NESTED</h2>
+<app-server></app-server>
+<app-server></app-server>
+to new html file and this component to root component
+
+We see the below nest
+
+<app-servers >Component SERVERS NESTED</h2>
+  <app-server>
+    <div class="jumbotron text-center"><h1>Server Component Added</h1></div>
+  </app-server>
+  <app-server>
+    <div class="jumbotron text-center"><h1>Server Component Added</h1></div>
+  </app-server>
+</app-servers>
+
+
+
+########################################################################
+Lets play with Templates HTML etc
+########################################################################
+
+We can write inline html
+that means we can write html in ts...wait what
+
+yeah...just instead of using templateUrl in @Component()
+user template: and start writing HTML.... `use these for multiline`
+
+
+What about CSS?
+We are already using bootstrap but
+lets add some color
+
+
+We can also define the styles in .ts file by 
+styles : [`
+h3:{color: red;}`
+]
+
+
+Lets add 2 more components named WarningAlert and SuccessAlert for practice 
+
+* Create folder
+* Add files
+* add to module.ts
+
+RESULT : SUCCESS
+
+
+We can also add selectors (app-root) etc using
+1.) Attributes [app-root] and use it in html as <div app-root></div>
+2.) Class .app-root and use it in html as <div class= app-root></div>
+
+
+
+###########################################################################
+
+DATA BINDING  === communication...that is..between type script code and HTML
+
+###########################################################################
+
+1.) String Interpolation -- {{}} -- normal variables and from method
+2.) Property Binding [property] = "data"
+
+React  to user events -- HTML to TS to HTML
+
+1.) Event binding (event) = "expression"
+
+2. Property Binding
+ Such as - <button class = "btn btn-primary" [disabled]="userName === ''" (click)="onResetUserName()">Reset Username</button>
+
+lets make changes server ts...
+
+Property Binding....weird syntax
+allowNewServer = false;
+  constructor() { 
+    setTimeout(() => {
+      this.allowNewServer = true},2000);
+  }
+
+Eventbinding 
+syntax ->(click)="onCreateServer()"
+
+Another one
+(input) = "onUpdateServerName($event)"
+here $event is a variable that give is some information about the event
+like clicking typing etc
+
+basically in this event we have something called target where we have the typed text value
+we fetch it using the below syntax
+use it like this - this.serverName = (<HTMLInputElement>event.target).value;
+
+
+Now the above thing that we did can be done easily by using
+TWO WAY BINDING:-
+It is done using FormsModule from @angular/forms using ngModel "directive"
+Import this is app.modules.ts
+
+[()] 
+2 way data binnding..the front end accepts the value given i backend when no event is triggered
+
+<input 
+type="text" 
+[(ngModel)] = "serverName"
+>
+
+
+#################################################################################
+DIRECTIVES -- Instructions in the DOM
+#################################################################################
+
+WE can write our own directives using @Directives decorator and there are a lot of
+inbuilt directives
+
+* they are used as attributes of a HTML tag
+<p *ngIf>
+<p *ngIf="serverCreated">Server was created, Server name is {{serverName}}</p>
+* indicates that this is a structural directive as it changes the structure of the DOM
+
+lets also add else to this..here is the syntax
+<p *ngIf="serverCreated; else noServer">Server was created, Server name is {{serverName}}</p>
+<ng-template #noServer>
+    <p>
+        No Server was created
+    </p>
+</ng-template>
+
+2.)Attribute Directives - They only change the elements they are placed on
+ngStyle
+<p [ngStyle] ="{backgroundColor: getColor()}">The server with ID {{ serverId}} is {{getServerStatus()}}</p>
+
+3.) ngClass
+<p [ngStyle] ="{backgroundColor: getColor()}"
+[ngClass]="{online: serverStatus === 'online'}">
+The server with ID {{ serverId}} is {{getServerStatus()}}
+</p>
+
+EXAMPLE - 
+<button class = "btn btn-primary" (click)="onSecret()">{{toggleMe}}</button>
+<p *ngIf="secret">{{theSecret}}</p>
+<p *ngFor="let number of clickLog; let i=index" 
+[ngStyle] ="{backgroundColor:number >= 5 ? 'blue': 'white'}"
+[ngClass]= "{'white-text': number >= 5}">
+{{i}} ---- > {{number}}</p>

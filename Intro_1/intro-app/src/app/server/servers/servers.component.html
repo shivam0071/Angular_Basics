@@ -1,0 +1,47 @@
+<label>Server Name</label>
+<!-- <input 
+type="text" 
+class = "form-control"
+(input) = "onUpdateServerName($event)"
+> -->
+<input 
+type="text" 
+class = "form-control"
+[(ngModel)] = "serverName"
+>
+<p>{{serverName}}</p>
+<!-- <button class = "btn btn-primary" [disabled]="!allowNewServer">Add Server</button> -->
+<button class = "btn btn-primary" [disabled]="!allowNewServer" (click)="onCreateServer()"> Add Server</button>
+
+<!-- <p>{{serverCreationStatus}}</p> -->
+<!-- DIRECTIVES -->
+<p *ngIf="serverCreated">Server was created, Server name is {{serverName}}</p>
+<!-- <ng-template #noServer>
+    <p>
+        No Server was created
+    </p>
+</ng-template> -->
+
+<p></p>
+<label>User Name</label>
+<input 
+type="text" 
+class = "form-control"
+[(ngModel)] = "userName"
+>
+<p>{{userName}}</p>
+<button class = "btn btn-primary" [disabled]="userName === ''" (click)="userName = ''">Reset Username</button>
+
+<!-- <app-server></app-server> -->
+<!-- <app-server></app-server> -->
+<!-- Directive ngFor -->
+
+<app-server *ngFor="let server of servers"></app-server>
+
+
+<button class = "btn btn-primary" (click)="onSecret()">{{toggleMe}}</button>
+<p *ngIf="secret">{{theSecret}}</p>
+<p *ngFor="let number of clickLog; let i=index" 
+[ngStyle] ="{backgroundColor:number >= 5 ? 'blue': 'white'}"
+[ngClass]= "{'white-text': number >= 5}">
+{{i}} ---- > {{number}}</p>
