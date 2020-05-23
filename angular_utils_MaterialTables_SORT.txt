@@ -1,0 +1,35 @@
+23rd May 2020 -- Corona Exist
+Use Dummy Data from here -- https://jsonplaceholder.typicode.com/users
+
+1.) firstly add angular material and angular animations to package.json
+    a >> npm install --save @angular/animations
+    b >> npm install --save @angular/material
+    c >> npm install --save @angular/cdk
+
+2.) Add the imports to app.module.ts
+    // For TABLES
+    import {HttpClientModule} from '@angular/common/http';
+    import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+    import {MatTableModule} from '@angular/material/table';
+    import {MatSortModule} from '@angular/material/sort';
+
+      imports: [
+    BrowserModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatSortModule,
+
+  ],
+
+3.) Create a new component
+    ng g c usertable
+
+4.) Creata a new service
+    >> ng g service user
+    Add the service to module.ts
+    >> import { UserService } from './user.service';
+    >>  providers: [UserService],
+
+
+5.) Make a new folder in app.... models > user.model.ts
